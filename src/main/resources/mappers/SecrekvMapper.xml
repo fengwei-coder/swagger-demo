@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SecrekvMapper">
+    <!-- 创建结果集映射 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.kv.Ukv">
+        <id property="id" column="id"/>
+        <result property="secretKey" column="secretKey" />
+        <result property="secretValue" column="secretValue" />
+    </resultMap>
+    <insert id="insert">
+        insert into ukv (id, secretKey, secretValue, expires, useAgeCount)
+        VALUES (#{id},#{secretKey},#{secretValue},#{expires},#{useAgeCount});
+    </insert>
+    <select id="select" resultType="com.example.demo.kv.Ukv">
+        select id,secretKey,secretValue,expires,useAgeCount from ukv where id=#{id}
+    </select>
+    <select id="findById" resultMap="BaseResultMap">
+        select expires,id,secretKey,secretValue,useAgeCount from ukv where id=#{instanceId}
+    </select>
+    <update id="updateById">
+        update ukv set useAgeCount=useAgeCount+#{addCount} where id=#{instanceId}
+    </update>
+    <update id="updateById1">
+        update ukv set useAgeCount=useAgeCount-1 where id=#{instanceId}
+    </update>
+
+</mapper>
